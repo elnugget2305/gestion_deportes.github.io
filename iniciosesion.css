@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: url('fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    width: 550px;
+    text-align: center;
+}
+
+.logo {
+    width: 420px;
+    height: auto;
+    max-width: 100%;
+}
+
+h1 {
+    color: #003366;
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+input {
+    width: 100%;
+    padding: 17px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+input::placeholder {
+    color: #666;
+    font-size: 17px;
+}
+
+button {
+    background-color: #003366;
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    margin: 15px 2 20px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: #004080;
+}
+
+.forgot-password {
+    margin-top: 15px;
+}
+
+.forgot-password a {
+    color: #003366;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: unset;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

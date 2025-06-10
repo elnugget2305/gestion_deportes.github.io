@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de Asistencia – Baloncesto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .contenido {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .btn-primary {
+      background-color: #0056b3;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #004099;
+    }
+    .btn-volver {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+    }
+    .btn-volver:hover {
+      background-color: #004099;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4 mb-5">
+    <div class="text-center mb-4">
+      <img src="logo.png" alt="Universidad Simón Bolívar" style="max-height: 120px;">
+      <h2 class="mt-2 fw-bold">Gestión de Asistencia</h2>
+    </div>
+
+    <div class="text-end mb-3">
+      <a href="pagina_principal.html" class="btn btn-volver">← Volver</a>
+    </div>
+    
+    <div class="contenido">
+      <ul class="nav nav-tabs" id="tabsAsistencia" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="registrar-tab" data-bs-toggle="tab" data-bs-target="#registrar" type="button" role="tab">Registrar Evento</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="asistencia-tab" data-bs-toggle="tab" data-bs-target="#asistencia" type="button" role="tab">Ver Lista de Asistencia</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="buscar-tab" data-bs-toggle="tab" data-bs-target="#buscar" type="button" role="tab">Buscar Asistencia de Jugador</button>
+        </li>
+      </ul>
+
+      <div class="tab-content mt-3" id="tabsAsistenciaContent">
+        <!-- TAB REGISTRO -->
+        <div class="tab-pane fade show active" id="registrar" role="tabpanel">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label for="tipoEvento" class="form-label">Tipo de Evento</label>
+              <select class="form-select" id="tipoEvento">
+                <option value="Entrenamiento">Entrenamiento</option>
+                <option value="Partido">Partido</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="codigoEvento" class="form-label">Código del Evento</label>
+              <input type="text" class="form-control" id="codigoEvento" placeholder="Ej: ENT123 o PAR456">
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-primary">Buscar Lista</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- TAB ASISTENCIA -->
+        <div class="tab-pane fade" id="asistencia" role="tabpanel">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered mt-3">
+              <thead class="table-light">
+                <tr>
+                  <th>ID Estudiante</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Asistencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>101</td>
+                  <td>Carlos</td>
+                  <td>Martínez</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>102</td>
+                  <td>Luisa</td>
+                  <td>Gómez</td>
+                  <td class="text-center">
+                    <input type="checkbox" class="form-check-input" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-end">
+              <button class="btn btn-primary">Guardar Asistencias</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB BUSCAR JUGADOR -->
+        <div class="tab-pane fade" id="buscar" role="tabpanel">
+          <form class="row g-3 mt-3" id="buscarAsistenciaForm">
+            <div class="col-md-4">
+              <label for="buscarIdJugador" class="form-label">ID del Jugador</label>
+              <input type="text" class="form-control" id="buscarIdJugador" placeholder="Ej: 101">
+            </div>
+            <div class="col-md-4">
+              <label for="buscarTipoEvento" class="form-label">Tipo de Evento</label>
+              <select class="form-select" id="buscarTipoEvento">
+                <option value="Entrenamiento">Entrenamiento</option>
+                <option value="Partido">Partido</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label for="buscarCodigoEvento" class="form-label">Código del Evento</label>
+              <input type="text" class="form-control" id="buscarCodigoEvento" placeholder="Ej: ENT123">
+            </div>
+            <div class="col-12 text-end">
+              <button type="button" class="btn btn-primary" onclick="buscarAsistencia()">Buscar</button>
+            </div>
+          </form>
+
+          <div class="mt-4" id="resultadoAsistencia" style="display:none;">
+            <div class="alert" role="alert" id="alertaResultado"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para simular búsqueda -->
+  <script>
+    function buscarAsistencia() {
+      const idJugador = document.getElementById("buscarIdJugador").value;
+      const tipoEvento = document.getElementById("buscarTipoEvento").value;
+      const codigoEvento = document.getElementById("buscarCodigoEvento").value;
+
+      // Simulación de búsqueda. Aquí iría tu conexión a base de datos real.
+      let asistenciaEncontrada = false;
+
+      // Ejemplo de datos simulados
+      if (idJugador === "101" && tipoEvento === "Entrenamiento" && codigoEvento === "ENT123") {
+        asistenciaEncontrada = true;
+      }
+
+      const resultadoDiv = document.getElementById("resultadoAsistencia");
+      const alerta = document.getElementById("alertaResultado");
+      resultadoDiv.style.display = "block";
+
+      if (asistenciaEncontrada) {
+        alerta.className = "alert alert-success";
+        alerta.innerText = `✅ El jugador con ID ${idJugador} asistió al ${tipoEvento} (${codigoEvento}).`;
+      } else {
+        alerta.className = "alert alert-danger";
+        alerta.innerText = `❌ No se encontró asistencia del jugador con ID ${idJugador} al ${tipoEvento} (${codigoEvento}).`;
+      }
+    }
+  </script>
+</body>
+</html>

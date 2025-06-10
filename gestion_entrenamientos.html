@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de Entrenamientos – Baloncesto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .contenido {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .btn-primary {
+      background-color: #0056b3;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #004099;
+    }
+    .btn-volver {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+    }
+    .btn-volver:hover {
+      background-color: #004099;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón de salir -->
+  
+
+  <div class="container mt-4 mb-5">
+    <div class="text-center mb-4">
+      <img src="logo.png" alt="Universidad Simón Bolívar" style="max-height: 120px;">
+      <h2 class="mt-2 fw-bold">Gestión de Entrenamientos</h2>
+    </div>
+  <div class="text-end mb-3">
+    <a href="pagina_principal.html" class="btn btn-volver">← Volver</a>
+  </div>
+
+
+    <div class="contenido">
+      
+      <!-- Formulario de entrenamiento -->
+      <form class="row g-3" id="formEntrenamiento">
+        <input type="hidden" id="editIndex" value="-1">
+        <div class="col-md-4">
+          <label for="fecha" class="form-label">Fecha (YYYY-MM-DD)</label>
+          <input type="date" class="form-control" id="fecha" required>
+        </div>
+        <div class="col-md-4">
+          <label for="horaInicio" class="form-label">Hora Inicio (HH:MM)</label>
+          <input type="time" class="form-control" id="horaInicio" required>
+        </div>
+        <div class="col-md-4">
+          <label for="horaFin" class="form-label">Hora Fin (HH:MM)</label>
+          <input type="time" class="form-control" id="horaFin" required>
+        </div>
+        <div class="col-md-6">
+          <label for="lugar" class="form-label">Lugar</label>
+          <input type="text" class="form-control" id="lugar" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary">Guardar Entrenamiento</button>
+        </div>
+      </form>
+
+      <!-- Búsqueda -->
+      <hr>
+      <form class="row g-3 mb-4">
+        <div class="col-md-4">
+          <label for="criterioBusqueda" class="form-label">Buscar por</label>
+          <select class="form-select" id="criterioBusqueda">
+            <option value="ID_Entrenamiento">ID_Entrenamiento</option>
+            <option value="Fecha">Fecha</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="valorBusqueda" class="form-label">Valor</label>
+          <input type="text" class="form-control" id="valorBusqueda">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="button" class="btn btn-primary w-100">Buscar</button>
+        </div>
+      </form>
+
+      <!-- Tabla -->
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered" id="tablaEntrenamientos">
+          <thead class="table-light">
+            <tr>
+              <th class="text-center"><input type="checkbox" id="selectAll" /></th>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Hora Inicio</th>
+              <th>Hora Fin</th>
+              <th>Lugar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center"><input type="checkbox" class="rowCheckbox" /></td>
+              <td>1</td>
+              <td>2025-06-12</td>
+              <td>16:00</td>
+              <td>18:00</td>
+              <td>Coliseo USB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="text-end mt-3">
+        <button class="btn btn-outline-secondary me-2" id="btnEditar">Editar</button>
+        <button class="btn btn-outline-danger" id="btnEliminar">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("formEntrenamiento");
+    const tabla = document.getElementById("tablaEntrenamientos").querySelector("tbody");
+    let contadorID = 2;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const fecha = document.getElementById("fecha").value;
+      const horaInicio = document.getElementById("horaInicio").value;
+      const horaFin = document.getElementById("horaFin").value;
+      const lugar = document.getElementById("lugar").value;
+      const editIndex = document.getElementById("editIndex").value;
+
+      if (editIndex === "-1") {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+          <td class="text-center"><input type="checkbox" class="rowCheckbox" /></td>
+          <td>${contadorID++}</td>
+          <td>${fecha}</td>
+          <td>${horaInicio}</td>
+          <td>${horaFin}</td>
+          <td>${lugar}</td>
+        `;
+        tabla.appendChild(fila);
+      } else {
+        const fila = tabla.rows[editIndex];
+        fila.cells[2].innerText = fecha;
+        fila.cells[3].innerText = horaInicio;
+        fila.cells[4].innerText = horaFin;
+        fila.cells[5].innerText = lugar;
+        document.getElementById("editIndex").value = -1;
+      }
+
+      form.reset();
+    });
+
+    document.getElementById("selectAll").addEventListener("change", function () {
+      document.querySelectorAll(".rowCheckbox").forEach(cb => {
+        cb.checked = this.checked;
+      });
+    });
+
+    document.getElementById("btnEditar").addEventListener("click", function () {
+      const seleccionadas = Array.from(document.querySelectorAll(".rowCheckbox:checked"));
+      if (seleccionadas.length !== 1) {
+        alert("Selecciona exactamente una fila para editar.");
+        return;
+      }
+      const fila = seleccionadas[0].closest("tr");
+      const index = Array.from(tabla.rows).indexOf(fila);
+      document.getElementById("fecha").value = fila.cells[2].innerText;
+      document.getElementById("horaInicio").value = fila.cells[3].innerText;
+      document.getElementById("horaFin").value = fila.cells[4].innerText;
+      document.getElementById("lugar").value = fila.cells[5].innerText;
+      document.getElementById("editIndex").value = index;
+    });
+
+    document.getElementById("btnEliminar").addEventListener("click", function () {
+      const seleccionadas = document.querySelectorAll(".rowCheckbox:checked");
+      if (seleccionadas.length === 0) {
+        alert("Selecciona al menos una fila para eliminar.");
+        return;
+      }
+      seleccionadas.forEach(cb => cb.closest("tr").remove());
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

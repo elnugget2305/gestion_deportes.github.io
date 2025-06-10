@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Universidad Simón Bolívar</title>
+    <link rel="stylesheet" href="iniciosesion.css">
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo.png" alt="Logo Universidad Simón Bolívar" class="logo">
+        
+        <!-- Agregado el id al formulario -->
+        <form id="loginForm">
+            <input type="text" id="username" name="username" placeholder="Usuario" required>
+            <input type="password" id="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">INGRESAR</button>
+            
+            <div class="forgot-password">
+                <a href="#">Recuperar contraseña</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Script para redirigir al hacer clic en "INGRESAR" -->
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita que se recargue la página
+            window.location.href = "pagina_principal.html"; // Cambia esto por la ruta a la página de destino
+        });
+    </script>
+</body>
+</html>
